@@ -3,20 +3,18 @@ from collections import Counter
 class Shingling:
     def __init__(self, k=10):
         self.k = k
+        self.shingles = Counter()
 
-    def shingles(self, filename):
-        curr_shingl = doc.read(self.k)
-        shingls = Counter({curr_shingl: 1})
+    def compute_shingles(self, filename):
 
-        while True:
-            c = doc.read(1)
-            if not c:
-                break
-            curr_shingl = curr_shingl[1:] + c
-            shingls = shingls + Counter({curr_shingl: 1})
+        with open(filename, 'r') as f:
+            curr_shingl = f.read(self.k)
+            self.shingles = Counter({curr_shingl: 1})
 
-if __name__ == '__main__':
-    k = 10
-    shingling = Shingling(k)
-    with open('topics/accuracy_garmin_nuvi_255W_gps.txt.data', 'r') as f:
-        shingling.shingles(f)
+            while True:
+                c = f.read(1)
+                if not c:
+                    break
+                curr_shingl = curr_shingl[1:] + c
+                self.shingles = self.shingles + Counter({curr_shingl: 1})
+        return self.shingles
