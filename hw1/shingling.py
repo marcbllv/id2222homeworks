@@ -1,22 +1,19 @@
+from collections import Counter
+
 class Shingling:
     def __init__(self, k=10):
         self.k = k
 
-    def shingles(self, doc):
-        """
-            doc is a file retreived using open('filepath')
-        """
-        shingls = {}
+    def shingles(self, filename):
         curr_shingl = doc.read(self.k)
-        shingls[curr_shingl] = 1
+        shingls = Counter({curr_shingl: 1})
 
         while True:
             c = doc.read(1)
             if not c:
                 break
             curr_shingl = curr_shingl[1:] + c
-            shingls[curr_shingl] = 1
-        
+            shingls = shingls + Counter({curr_shingl: 1})
 
 if __name__ == '__main__':
     k = 10
