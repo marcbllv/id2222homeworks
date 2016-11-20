@@ -1,11 +1,11 @@
 from collections import Counter
-import hashlib
+import md5
 
 class Shingling:
     def __init__(self, k=10):
         self.k = k
         self.shingles = None
-        self.hshr = hashlib.md5()
+        self.hshr = md5
 
     def compute_shingles(self, filename):
 
@@ -22,6 +22,6 @@ class Shingling:
         return self.shingles
 
     def _hasher(self, string, size=4):
-        self.hshr.update(string)
-        return int(self.hshr.hexdigest()[-size:], 16)
+        hashed = self.hshr.new(string).hexdigest()
+        return int(hashed[-size:], 16)
 
